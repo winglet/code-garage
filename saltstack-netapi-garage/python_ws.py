@@ -1,3 +1,5 @@
+#obsoleted by consumeWSevts.py
+
 #!/usr/bin/python
 import websocket
 import requests
