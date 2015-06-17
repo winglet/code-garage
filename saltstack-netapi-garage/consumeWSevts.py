@@ -7,14 +7,27 @@ import ssl
 import sys
 
 import urllib2, urllib
-mydata=[('username','saltuser'),('password','saltuser'),('eauth','pam')]    #The first is the var name the second is the value
+import json
+
+mydata=[('username','saltuser'),('password','saltuser'),('eauth','pam')]   
 mydata=urllib.urlencode(mydata)
+myjsondata={
+'username':'saltuser',
+'password':'saltuser',
+'eauth':'pam'
+}
+
 serverFQDN=sys.argv[1];
 loginURL="http://"+serverFQDN + "/login"
 print("Logging in: "+ loginURL)
-req=urllib2.Request(loginURL, mydata)
-req.add_header("Content-type", "application/x-www-form-urlencoded")
-req.add_header("Accept", "application/x-yaml")
+
+
+req=urllib2.Request(loginURL, json.dumps(myjsondata))
+req.add_header("Content-type", "application/json")
+#req=urllib2.Request(loginURL, mydata)
+#req.add_header("Content-type", "application/x-www-form-urlencoded")
+
+req.add_header("Accept", "application/json")
 page=urllib2.urlopen(req).read()
 print page
 
