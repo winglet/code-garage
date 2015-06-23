@@ -1,24 +1,30 @@
 #!/usr/bin/python
-#example run: ./consumeWSevts.py localhost:8000
+#example run: ./consumeWSevts.py localhost:8000 saltuser saltuser
 import websocket
 import requests
 import ssl
-
 import sys
-
 import urllib2, urllib
 import json
+import argparse
 
-mydata=[('username','saltuser'),('password','saltuser'),('eauth','pam')]   
+parser = argparse.ArgumentParser(description='Connect to a salt server Websocket endpoint')
+parser.add_argument("serverFQDN", help='Server URL e.g. localhost:8000')
+parser.add_argument("username",   help='salt user name')
+parser.add_argument("userpwd",    help='salt user password')
+
+args = parser.parse_args()
+
+
+mydata=[('username',args.username),('password',args.userpwd),('eauth','pam')]   
 mydata=urllib.urlencode(mydata)
 myjsondata={
-'username':'saltuser',
-'password':'saltuser',
+'username':args.username,
+'password':args.userpwd,
 'eauth':'pam'
 }
 
-serverFQDN=sys.argv[1];
-loginURL="http://"+serverFQDN + "/login"
+loginURL="http://"+args.serverFQDN + "/login"
 print("Logging in: "+ loginURL)
 
 
@@ -36,7 +42,7 @@ doc = yaml.load(page)
 
 token = doc.get('return')[0].get('token')
 
-wsuri="ws://"+serverFQDN+"/ws/"
+wsuri="ws://"+args.serverFQDN+"/ws/"
 ws = websocket.WebSocket()
 print("Will try creating connection to: " + wsuri+token);
 ws = websocket.create_connection( wsuri + token)
