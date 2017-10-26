@@ -28,5 +28,6 @@ G >>> J
 G >>> K
 ```
 
-
+### Credits:
+Started off from code found here: https://stackoverflow.com/questions/6075974/python-file-parsing-build-tree-from-text-file
 
