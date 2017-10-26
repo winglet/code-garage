@@ -13,7 +13,8 @@
 |    +--- J
 |    \--- K
 ```
-### command line: python3 parse_text_tree.py inp_file
+### command line: 
+`python3 parse_text_tree.py inp_file`
 
 ### expected output:
 ```
